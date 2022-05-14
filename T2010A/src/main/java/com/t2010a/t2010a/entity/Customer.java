@@ -1,5 +1,7 @@
 package com.t2010a.t2010a.entity;
 
+import com.t2010a.t2010a.util.DateTimeHelper;
+
 import java.time.LocalDateTime;
 
 public class Customer {
@@ -114,5 +116,12 @@ public class Customer {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public String getDobString() {
+        if(this.dob != null){
+            return DateTimeHelper.convertLocalDateTimeToString(this.dob);
+        }
+        return "";
     }
 }
