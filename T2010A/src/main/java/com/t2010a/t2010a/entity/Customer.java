@@ -37,7 +37,20 @@ public class Customer {
     }
 
     public Customer(){
+        this.cusID = "";
+        this.name = "";
+        this.phone = "";
+        this.image = "";
+    }
 
+    public Customer(String cusID, String name, String phone){
+        this.cusID = cusID;
+        this.name = name;
+        this.phone = phone;
+        this.image = "";
+        this.createdAt =LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+        this.status = 1;
     }
 
     @Override
@@ -104,6 +117,12 @@ public class Customer {
 
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
+    }
+    public String getJoinedAt() {
+        if(this.createdAt != null){
+            return DateTimeHelper.convertLocalDateTimeToString(this.createdAt);
+        }
+        return "";
     }
 
     public void setUpdatedAt(LocalDateTime updatedAt) {

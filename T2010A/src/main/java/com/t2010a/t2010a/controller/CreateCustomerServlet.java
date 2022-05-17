@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 
 public class CreateCustomerServlet extends HttpServlet {
     private CustomerModel customerModel;
@@ -33,12 +34,30 @@ public class CreateCustomerServlet extends HttpServlet {
         String cusID = req.getParameter("cusID");
         String name = req.getParameter("name");
         String phone = req.getParameter("phone");
-        String image = req.getParameter("image");
-        String stringBirthday = req.getParameter("dob");
-
-        LocalDateTime dob = DateTimeHelper.convertStringToLocalDateTime(stringBirthday);
-        Customer customer = new Customer(cusID, name, phone, image, dob);
-        //validate dữ liệu
+        String stringDob = req.getParameter("dob");
+        Customer customer = new Customer(cusID, name, phone);
+        HashMap<String, String> errors = new HashMap<>();
+        if (stringDob != null && stringDob.length() >0){
+            LocalDateTime dob = DateTimeHelper.convertStringToLocalDateTime(stringDob);
+            customer.setDob(dob);
+        }
+        //validate dữ liệu theo kiểu cùi bắp
+        if (cusID == null || cusID.length() == 0) {
+            errors.put("cusID", "Please enter customer ID");
+        }
+        if (name == null || name.length() == 0) {
+            errors.put("name", "Please enter name");
+        }
+        if (phone == null || phone.length() == 0) {
+            errors.put("phone", "Please enter phone");
+        }
+        if(errors.size() > 0){
+            req.setAttribute("customer", customer);
+            req.setAttribute("action", 1);
+            req.setAttribute("errors", errors);
+            req.getRequestDispatcher("/admin/customers/form.jsp").forward(req, resp);
+            return;
+        }
         if (customerModel.save(customer) != null){
             resp.sendRedirect("/admin/customers/list");
         }else {
