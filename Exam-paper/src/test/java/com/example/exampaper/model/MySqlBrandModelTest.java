@@ -12,7 +12,7 @@ class MySqlBrandModelTest {
     private MySqlBrandModel model;
     @BeforeEach
     void setUp() {
-        this.model = new MySqlBrandModel();
+        model = new MySqlBrandModel();
     }
 
     @Test

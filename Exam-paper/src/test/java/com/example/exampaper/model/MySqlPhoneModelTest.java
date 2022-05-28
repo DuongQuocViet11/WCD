@@ -12,7 +12,7 @@ class MySqlPhoneModelTest {
     private MySqlPhoneModel model;
     @BeforeEach
     void setUp() {
-        this.model = new MySqlPhoneModel();
+        model = new MySqlPhoneModel();
     }
 
     @Test
